@@ -21,7 +21,7 @@ def identify_protocol(port_to_protocols_dict):
     print("Option 1: Identify the port's PROTOCOL.")
     print("---------------------------------------\n")
 
-    # Variable for loop
+    # Variable for loop to keep studying in this option
     done = False
 
     # Allow user to keep studying by asking questions until they're done.
@@ -56,7 +56,7 @@ def identify_port(protocol_to_ports):
     print("Option 2: Identify the port's NUMBER.")
     print("---------------------------------------\n")
     
-    # Variable for loop
+    # Variable for loop to keep studying in this option
     done = False
 
     # Allow user to keep studying by asking questions until they're done.
@@ -91,7 +91,7 @@ def identify_port(protocol_to_ports):
                 print(f"Incorrect. The correct answer is {answer_line}.\n")
 
 def main():
-    # Variable for knowing when user is finished with the loop
+    # Variable for knowing when user is finished with the study loop
     done = False
 
     # Dictionary to map port numbers and their corresponding port protocols
@@ -139,10 +139,10 @@ def main():
             user_choice = input("Invalid. Enter choice: ")
         
         # Do the option associated with the user's choice
-        if(user_choice == "1"): # Option 1
+        if(user_choice == "1"): # Option 1 selected
             identify_protocol(port_to_protocols_dict)
             print() # Blank Spacing
-        elif(user_choice == "2"): # Option 2
+        elif(user_choice == "2"): # Option 2 selected
             identify_port(protocol_to_ports)
             print()
         else: # User wants to quit
