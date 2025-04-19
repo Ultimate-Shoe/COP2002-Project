@@ -14,16 +14,6 @@ def main_menu():
     print("2. Given a port protocol, identify a port NUMBER.")
     print("3. Exit")
 
-def getUserChoice():
-    ''' Get the user's choice from the main menu ensuring it is either 1, 2, or 3.'''
-
-    userChoice = input("\nChoice: ")
-
-    while userChoice not in ["1", "2", "3"]:
-        userChoice = input("Invalid. Enter choice: ")
-        
-    return userChoice
-
 def identify_protocol(port_to_protocols_dict):
     ''' Handle studying for option 1 - identify the protocol for a given port number.'''
 
@@ -143,13 +133,16 @@ def main():
         main_menu()
 
         # Get the user's choice
-        choice = getUserChoice()
+        user_choice = input("\nChoice: ")
+
+        while user_choice not in ["1", "2", "3"]:
+            user_choice = input("Invalid. Enter choice: ")
         
         # Do the option associated with the user's choice
-        if(choice == "1"): # Option 1
+        if(user_choice == "1"): # Option 1
             identify_protocol(port_to_protocols_dict)
             print() # Blank Spacing
-        elif(choice == "2"): # Option 2
+        elif(user_choice == "2"): # Option 2
             identify_port(protocol_to_ports)
             print()
         else: # User wants to quit
