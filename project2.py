@@ -1,6 +1,6 @@
 #  Zion Needham (Ultimate-Shoe)
 #  W25 COP2002.0M1.
-#  04/18/2025
+#  04/19/2025
 #  Port Protocols Study Program
 #  Simple Python program to assist IT students studying port numbers and protocols
 
@@ -24,39 +24,7 @@ def getUserChoice():
         
     return userChoice
 
-def get_RandomPort(port_dict):
-    ''' Picks a random port number from our list of ports to use in our practice questions.'''
-    
-    random_portnum_key = random.choice(tuple(port_dict.keys()))
-    return random_portnum_key
-
-def get_RandomProtocol(port_dict):
-    ''' Picks a random protocol from our list of protocols to use in our practice questions..'''
-
-    random_porotocol_value = random.choice(tuple(port_dict.values()))
-    return random_porotocol_value
-
-def whatProtocol(inputPort, port_dict):
-    ''' Matches and converts a given port number to it's corresponding protocol.'''
-
-    return port_dict.get(inputPort)
-
-def reverse_port_dict(port_dict):
-    ''' Creates a reverse dictionary that maps port numbers and protocols to a list. '''
-
-    protocol_to_ports = {}  # We start with an empty list
-    for port, protocol in port_dict.items():
-        protocol = protocol.upper()
-
-        # We add those protocols that are not yet in the list
-        if protocol not in protocol_to_ports:   
-            protocol_to_ports[protocol] = [port]
-        else:
-            protocol_to_ports[protocol].append(port)
-
-    return protocol_to_ports
-
-def option1(port_dict):
+def identify_protocol(port_to_protocols_dict):
     ''' Handle studying for option 1 - identify the protocol for a given port number.'''
 
     # Print header info for Option 1
@@ -68,31 +36,30 @@ def option1(port_dict):
 
     # Allow user to keep studying by asking questions until they're done.
     while not done:
-        # Randomize a port number for our practice question.
-        randomPort = get_RandomPort(port_dict)
+        # Prepare the practice question by pulling a random port number protocol and save the correct protocol
+        random_Port = random.choice(list(port_to_protocols_dict.keys()))
+        correct_Protocol = port_to_protocols_dict[random_Port].upper()
 
         # Force user to enter the loop
-        userAnswer = ""
+        userProtocol_Answer = ""
 
         # Keep reprompting the question when user hits Enter (inputs no choice)
-        while userAnswer == "":
-            userAnswer = input(f"What is the protocol for port {randomPort} (m=Main Menu)? ").upper() # Ask the question; user answer is uppercase
+        while userProtocol_Answer == "":
+            userProtocol_Answer = input(f"What is the protocol for port {random_Port} (m=Main Menu)? ").upper() # Ask the question; user answer is uppercase
 
         # Determine whether user answered or is done.
-        if userAnswer == "M":  # End the loop and return to main menu
+        if userProtocol_Answer == "M":  # End the loop and return to main menu
             done = True
         else:   # User answered
-            # Calculate the correct answer protocol
-            correctProtocol = whatProtocol(randomPort, port_dict)
-
+  
             # Check if user's answer is the correct protocol (correct answer needs to be uppercase for the comparison)
-            if userAnswer == correctProtocol.upper():
+            if userProtocol_Answer == correct_Protocol.upper():
                 print("Correct answer!\n")
             else:
-                print(f"Incorrect. The correct answer is {correctProtocol}.\n")
+                print(f"Incorrect. The correct answer is {correct_Protocol}.\n")
 
 
-def option2(port_dict, protocol_to_ports):
+def identify_port(protocol_to_ports):
     ''' Handle studying for option 2 - identify the port number for a given protocol.'''
 
     # Print header info for Option 2
@@ -104,32 +71,32 @@ def option2(port_dict, protocol_to_ports):
 
     # Allow user to keep studying by asking questions until they're done.
     while not done:
-        # Prepare the practice question by pulling a random port protocol
-        randomProtocol = get_RandomProtocol(port_dict)
+        # Prepare the practice question by pulling a random port protocol and save the correct port
+        random_Protocol = random.choice(list(protocol_to_ports.keys()))
+        correct_Ports = protocol_to_ports[random_Protocol]
 
         # Force to enter the loop
         userPortnum_Answer = ""
 
-        # Keep reprompting the question when user hits Enter
+        # Keep reprompting the question when user hits Enter (inputs no choice)
         while userPortnum_Answer == "":
-            userPortnum_Answer = input(f"What is the number for protocol {randomProtocol}(m=Main Menu)? ").upper() # Ask the question; user answer is uppercase
+            userPortnum_Answer = input(f"What is the number for protocol {random_Protocol} (m=Main Menu)? ").upper() # Ask the question; user answer is uppercase
 
         # Determine whether user answered or is done.
         if userPortnum_Answer == "M":  # End the loop and return to main menu
             done = True
         else:   # User answered
-            correct_ports = protocol_to_ports.get(randomProtocol.upper(), [])
-
+            
             # Check if user's answer is the correct port number
-            if userPortnum_Answer in correct_ports:
+            if userPortnum_Answer in correct_Ports:
                 print("Correct answer!\n")
             else:
-                # We manually create a comma-separated list
+                # We manually create a comma-separated answer list (if more than one correct answer)
                 answer_line = ""
-                for i in range(len(correct_ports)):
-                    answer_line += correct_ports[i]
-                    if i < len(correct_ports) - 1:  # If we have multiple correct answers
-                        answer_line += ", "
+                for i in range(len(correct_Ports)):
+                    answer_line += correct_Ports[i]
+                    if i < len(correct_Ports) - 1:  # If we have more than one correct answer in the list
+                        answer_line += " or " # Tell user both answers that are correct
 
                 print(f"Incorrect. The correct answer is {answer_line}.\n")
 
@@ -138,15 +105,37 @@ def main():
     done = False
 
     # Dictionary to map port numbers and their corresponding port protocols
-    port_dict = {
-        "20": "FTP", "21": "FTP", "22": "SSH", "23": "Telnet", "25": "SMTP",
-        "53": "DNS", "67": "DHCP", "68": "DHCP", "80": "HTTP", "110": "POP3",
-        "137": "NetBIOS", "139": "NetBIOS", "143": "IMAP", "161": "SNMP",
-        "162": "SNMP", "389": "LDAP", "443": "HTTPS", "445": "SMB", "3389": "RDP"
+    port_to_protocols_dict = {
+    "20": "FTP",
+    "21": "FTP",
+    "22": "SSH",
+    "23": "Telnet",
+    "25": "SMTP",
+    "53": "DNS",
+    "67": "DHCP",
+    "68": "DHCP",
+    "80": "HTTP",
+    "110": "POP3",
+    "137": "NetBIOS",
+    "139": "NetBIOS",
+    "143": "IMAP",
+    "161": "SNMP",
+    "162": "SNMP",
+    "389": "LDAP",
+    "443": "HTTPS",
+    "445": "SMB",
+    "3389": "RDP",
     }
     
     # Reverse dictionary for checking pairs with multiple correct answers; ie. FTP, NetBIOS, SNMP
-    protocol_to_ports = reverse_port_dict(port_dict)
+    protocol_to_ports = {}  # We start with an empty list
+    for port, protocol in port_to_protocols_dict.items():
+
+        # We add those protocols that are not yet in the list
+        if protocol not in protocol_to_ports:   
+            protocol_to_ports[protocol] = [port]
+        else:
+            protocol_to_ports[protocol].append(port)
 
     # Allow user to keep studying until finished
     while(not done):
@@ -158,10 +147,10 @@ def main():
         
         # Do the option associated with the user's choice
         if(choice == "1"): # Option 1
-            option1(port_dict)
+            identify_protocol(port_to_protocols_dict)
             print() # Blank Spacing
         elif(choice == "2"): # Option 2
-            option2(port_dict, protocol_to_ports)
+            identify_port(protocol_to_ports)
             print()
         else: # User wants to quit
             done = True
