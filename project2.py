@@ -1,4 +1,4 @@
-#  Zion Needham (Ultimate-Shoe)
+#  Ultimate-Shoe
 #  W25 COP2002.0M1.
 #  04/19/2025
 #  Port Protocols Study Program
@@ -7,7 +7,7 @@
 import random # To be able to pull random options from our dictionary for creating questions.
 
 def main_menu():
-    """Outputs the main menu options."""
+    """ Outputs the main menu options. """
 
     print("Main Menu:")
     print("1. Given a port number, identify the PROTOCOL (use abbreviation).")
@@ -15,7 +15,7 @@ def main_menu():
     print("3. Exit")
 
 def identify_protocol(port_to_protocols_dict):
-    ''' Handle studying for option 1 - identify the protocol for a given port number.'''
+    ''' Handle studying for option 1 - identify the protocol for a given port number. '''
 
     # Print header info for Option 1
     print("Option 1: Identify the port's PROTOCOL.")
@@ -50,7 +50,7 @@ def identify_protocol(port_to_protocols_dict):
 
 
 def identify_port(protocol_to_ports):
-    ''' Handle studying for option 2 - identify the port number for a given protocol.'''
+    ''' Handle studying for option 2 - identify the port number for a given protocol. '''
 
     # Print header info for Option 2
     print("Option 2: Identify the port's NUMBER.")
